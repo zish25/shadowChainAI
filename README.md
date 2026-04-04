@@ -72,6 +72,8 @@ The scan results confirmed that the current codebase is free from known vulnerab
 
 This complements our behavioral risk scoring by adding a static security validation layer.
 
+All modules were tested through multiple simulated scenarios, ensuring correct risk scoring and response behavior.
+
 ### 📸 Scan Results
 
 Semgrep scan showing no detected vulnerabilities in the current codebase.
