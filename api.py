@@ -9,6 +9,6 @@ def home():
 @app.post("/ok")
 def ok():
     return {
-        "status": "success",
-        "message": "OpenEnv endpoint working"
+        "status": "ok",
+        "message": "reset successful"
     }
