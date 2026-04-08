@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
 
-app = FastAPI()
+app = FastAPI(root_path="")
 
 @app.get("/")
 def home():
@@ -8,9 +8,9 @@ def home():
 
 @app.post("/ok")
 async def ok(request: Request):
-    data = await request.json()  # ✅ IMPORTANT
+    try:
+        await request.json()
+    except:
+        pass
 
-    return {
-        "status": "ok",
-        "received": data
-    }
+    return {"status": "ok"}
