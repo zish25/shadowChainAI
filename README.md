@@ -3,7 +3,7 @@ title: Shadowchain
 emoji: 🚀
 colorFrom: red
 colorTo: red
-sdk: streamlit
+sdk: docker
 app_file: app.py
 pinned: false
 ---
