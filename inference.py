@@ -1,4 +1,11 @@
 import os
+from openai import OpenAI
+
+# --- OpenAI Client (REQUIRED for LLM check) ---
+client = OpenAI(
+    base_url=os.getenv("API_BASE_URL"),
+    api_key=os.getenv("API_KEY")
+)
 
 # --- Imports ---
 from environment import SecurityEnv
@@ -10,9 +17,17 @@ from context_intelligence import extract_context_features
 from behavior_analysis import extract_behavior_features
 
 
-# --- Dummy LLM Call (NO dependency) ---
+# --- LLM Call (REQUIRED) ---
 def call_llm(prompt):
-    return "LLM skipped (no dependency)"
+    try:
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=10
+        )
+        return response.choices[0].message.content
+    except:
+        return "LLM fallback"
 
 
 def main():
@@ -62,16 +77,17 @@ def main():
         # Logging
         logger.log_episode(state, state["risk_score"], action, reward, evaluation_reward)
 
-        # Dummy LLM call
+        # 🔥 REAL LLM CALL
         llm_output = call_llm(f"Risk score is {risk_score}")
 
-        # Structured Logs (IMPORTANT)
+        # Structured Logs
         print(f"[STEP] episode={episode}", flush=True)
         print(f"[STEP] state={state}", flush=True)
         print(f"[STEP] risk_score={risk_score}", flush=True)
         print(f"[STEP] action={action}", flush=True)
         print(f"[STEP] reward={reward}", flush=True)
         print(f"[STEP] llm_output={llm_output}", flush=True)
+
         print("[END]\n", flush=True)
 
 
