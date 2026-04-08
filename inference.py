@@ -22,7 +22,7 @@ from behavior_analysis import extract_behavior_features
 # --- LLM Call (SAFE + REQUIRED) ---
 def call_llm(prompt):
     if client is None:
-        return "LLM skipped (no key)"
+        return "LLM fallback"
 
     try:
         response = client.chat.completions.create(
