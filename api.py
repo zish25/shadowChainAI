@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 
 app = FastAPI()
 
@@ -7,8 +7,10 @@ def home():
     return {"status": "running"}
 
 @app.post("/ok")
-def ok():
+async def ok(request: Request):
+    data = await request.json()  # ✅ IMPORTANT
+
     return {
         "status": "ok",
-        "message": "reset successful"
+        "received": data
     }
