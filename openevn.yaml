@@ -1,0 +1,11 @@
+id: shadowchain-ai
+name: ShadowChain AI Environment
+
+entrypoint: inference.py
+
+env:
+  python: "3.10"
+
+description: >
+  A cybersecurity simulation environment that predicts risk and selects actions
+  based on user behavior and contextual features.
