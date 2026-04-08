@@ -1,3 +1,9 @@
+import os
+
+API_BASE_URL = os.getenv("API_BASE_URL", "")
+MODEL_NAME = os.getenv("MODEL_NAME", "")
+HF_TOKEN = os.getenv("HF_TOKEN", "")
+
 from environment import SecurityEnv
 from behavior_analysis import extract_behavior_features
 from context_intelligence import extract_context_features
