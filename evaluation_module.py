@@ -11,5 +11,7 @@ def expected_action(risk_score):
 
 
 def evaluate_decision(risk_score, action):
-    """Grade decision correctness with a simple reward signal."""
-    return 1.0 if action == expected_action(risk_score) else -1.0
+    if action == expected_action(risk_score):
+        return 0.9   # correct decision
+    else:
+        return 0.1   # wrong decision
