@@ -1,7 +1,4 @@
-version: 1
+version: "1"
 
 entrypoint:
   file: inference.py
-
-environment:
-  python: 3.10
