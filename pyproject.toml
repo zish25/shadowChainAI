@@ -1,0 +1,12 @@
+[project]
+name = "shadowchain-ai"
+version = "0.1.0"
+description = "Cybersecurity simulation environment with ML-based risk prediction"
+requires-python = ">=3.10"
+
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "scikit-learn",
+    "numpy"
+]
