@@ -1,16 +1,18 @@
 from fastapi import FastAPI, Request
 
-app = FastAPI(root_path="")
+app = FastAPI()
 
 @app.get("/")
 def home():
     return {"status": "running"}
 
-@app.post("/ok")
+@app.api_route("/ok", methods=["GET", "POST"])
 async def ok(request: Request):
     try:
-        await request.json()
+        data = await request.json()
     except:
-        pass
+        data = {}
 
-    return {"status": "ok"}
+    return {
+        "status": "ok"
+    }
