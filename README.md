@@ -1,3 +1,13 @@
+---
+title: Shadowchain
+emoji: 🚀
+colorFrom: red
+colorTo: red
+sdk: streamlit
+app_file: app.py
+pinned: false
+---
+
 # ShadowChainAI
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
