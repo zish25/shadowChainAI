@@ -4,6 +4,7 @@ from context_intelligence import extract_context_features
 from decision_module import choose_action
 from evaluation_module import evaluate_decision
 from logging_system import BasicLogger
+from ml_model import predict_risk
 from risk_engine import calculate_risk_score
 
 
@@ -29,7 +30,17 @@ def main():
 
         context_features = extract_context_features(state)
         behavior_features = extract_behavior_features(state)
-        risk_score = calculate_risk_score(context_features, behavior_features)
+        
+        from ml_model import predict_risk
+
+        features = [
+            state["login_time"],
+            1 if state["location"] == "unknown" else 0,
+            state["activity"]["file_access"],
+            state["activity"]["failed_logins"],
+        ]
+
+        risk_score = predict_risk(features)
         action = choose_action(risk_score)
         evaluation_reward = evaluate_decision(risk_score, action)
 
