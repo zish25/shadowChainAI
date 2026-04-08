@@ -28,7 +28,7 @@ def main():
     ]
 
     for episode, scenario in enumerate(scenarios, start=1):
-        print("START EPISODE")
+        print("[START]", flush=True)
 
         state = env.reset()
 
@@ -66,14 +66,13 @@ def main():
         llm_output = call_llm(f"Risk score is {risk_score}")
 
         # Structured Logs (IMPORTANT)
-        print(f"STEP: episode={episode}")
-        print(f"STEP: state={state}")
-        print(f"STEP: risk_score={risk_score}")
-        print(f"STEP: action={action}")
-        print(f"STEP: reward={reward}")
-        print(f"STEP: llm_output={llm_output}")
-
-        print("END EPISODE\n")
+        print(f"[STEP] episode={episode}", flush=True)
+        print(f"[STEP] state={state}", flush=True)
+        print(f"[STEP] risk_score={risk_score}", flush=True)
+        print(f"[STEP] action={action}", flush=True)
+        print(f"[STEP] reward={reward}", flush=True)
+        print(f"[STEP] llm_output={llm_output}", flush=True)
+        print("[END]\n", flush=True)
 
 
 if __name__ == "__main__":
