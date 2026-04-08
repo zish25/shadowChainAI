@@ -1,11 +1,13 @@
 import os
 from openai import OpenAI
 
-# --- OpenAI Client (REQUIRED for LLM check) ---
-client = OpenAI(
-    base_url=os.getenv("API_BASE_URL"),
-    api_key=os.getenv("API_KEY")
-)
+# --- SAFE OpenAI Client ---
+client = None
+if os.getenv("API_KEY"):
+    client = OpenAI(
+        base_url=os.getenv("API_BASE_URL"),
+        api_key=os.getenv("API_KEY")
+    )
 
 # --- Imports ---
 from environment import SecurityEnv
@@ -17,8 +19,11 @@ from context_intelligence import extract_context_features
 from behavior_analysis import extract_behavior_features
 
 
-# --- LLM Call (REQUIRED) ---
+# --- LLM Call (SAFE + REQUIRED) ---
 def call_llm(prompt):
+    if client is None:
+        return "LLM skipped (no key)"
+
     try:
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
