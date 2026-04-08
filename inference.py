@@ -1,19 +1,4 @@
 import os
-from openai import OpenAI
-
-# --- Environment Variables ---
-API_BASE_URL = os.getenv("API_BASE_URL", "http://localhost")
-MODEL_NAME = os.getenv("MODEL_NAME", "shadowchain-model")
-HF_TOKEN = os.getenv("HF_TOKEN")
-LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
-
-# --- OpenAI Client Setup ---
-client = None
-if HF_TOKEN:
-    client = OpenAI(
-        base_url=API_BASE_URL,
-        api_key=HF_TOKEN
-    )
 
 # --- Imports ---
 from environment import SecurityEnv
@@ -21,22 +6,13 @@ from decision_module import choose_action
 from evaluation_module import evaluate_decision
 from logging_system import BasicLogger
 from ml_model import predict_risk
+from context_intelligence import extract_context_features
+from behavior_analysis import extract_behavior_features
 
 
-# --- Dummy LLM Call (for compliance) ---
+# --- Dummy LLM Call (NO dependency) ---
 def call_llm(prompt):
-    if client is None:
-        return "LLM skipped (no token)"
-
-    try:
-        response = client.chat.completions.create(
-            model=MODEL_NAME,
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=10
-        )
-        return response.choices[0].message.content
-    except:
-        return "LLM fallback response"
+    return "LLM skipped (no dependency)"
 
 
 def main():
@@ -86,7 +62,7 @@ def main():
         # Logging
         logger.log_episode(state, state["risk_score"], action, reward, evaluation_reward)
 
-        # Dummy LLM call (required for checklist)
+        # Dummy LLM call
         llm_output = call_llm(f"Risk score is {risk_score}")
 
         # Structured Logs (IMPORTANT)
