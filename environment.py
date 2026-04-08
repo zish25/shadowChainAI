@@ -40,10 +40,10 @@ class SecurityEnv:
             tuple: (updated_state, reward, done)
         """
         if self.done:
-            return self.state, 0.0, True
+            return self.state, 0.5, True
 
         if action not in self.VALID_ACTIONS:
-            return self.state, -1.0, False
+            return self.state, 0.05, False
 
         # --- Risk Score Calculation ---
         risk_score = 0.0
@@ -78,32 +78,32 @@ class SecurityEnv:
         self.state["risk_score"] = round(risk_score, 2)
 
         # --- Reward Calculation ---
-        reward = 0.0
+        reward = 0.5
 
         if risk_score >= 0.6:
             # High risk — blocking/quarantining is correct
             if action in ["block", "quarantine"]:
-                reward = 1.0
+                reward = 0.95
             elif action == "monitor":
-                reward = 0.3
+                reward = 0.7
             else:
-                reward = -1.0   # allowing a high-risk event is bad
+                reward = 0.05   # allowing a high-risk event is bad
         elif risk_score >= 0.3:
             # Medium risk — monitoring is ideal
             if action == "monitor":
-                reward = 1.0
+                reward = 0.95
             elif action in ["block", "quarantine"]:
-                reward = 0.5
+                reward = 0.7
             else:
-                reward = -0.5
+                reward = 0.2
         else:
             # Low risk — allowing is correct
             if action == "allow":
-                reward = 1.0
+                reward = 0.95
             elif action == "monitor":
-                reward = 0.5
+                reward = 0.7
             elif action in ["block", "quarantine"]:
-                reward = -0.5   # overreacting to low risk
+                reward = 0.2   # overreacting to low risk
 
         # Episode ends after one decision
         self.done = True
