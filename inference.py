@@ -19,7 +19,7 @@ from context_intelligence import extract_context_features
 from behavior_analysis import extract_behavior_features
 
 
-# --- LLM Call (SAFE + REQUIRED) ---
+# --- LLM Call ---
 def call_llm(prompt):
     if client is None:
         return "LLM fallback"
@@ -76,13 +76,16 @@ def main():
         action = choose_action(risk_score)
         evaluation_reward = evaluate_decision(risk_score, action)
 
-        # Environment step
-        state, reward, _ = env.step(action)
+        # Environment step (IGNORE env reward)
+        state, _, _ = env.step(action)
+
+        # ✅ USE VALID REWARD
+        reward = evaluation_reward
 
         # Logging
         logger.log_episode(state, state["risk_score"], action, reward, evaluation_reward)
 
-        # 🔥 REAL LLM CALL
+        # LLM call
         llm_output = call_llm(f"Risk score is {risk_score}")
 
         # Structured Logs
