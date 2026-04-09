@@ -10,4 +10,4 @@ def calculate_risk_score(context_features, behavior_features):
         + behavior_features["file_access_risk"]
     )
 
-    return min(risk_score, 1.0)
+    return min(max(risk_score, 0.01), 0.99)

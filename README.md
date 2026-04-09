@@ -172,7 +172,7 @@ python test_env.py
 state: {...}
 risk_score: 0.72
 chosen action: block
-reward: 1.0
+reward: 0.95
 ```
 
 ---

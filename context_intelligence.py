@@ -6,13 +6,13 @@ def extract_context_features(state):
     login_time = state["login_time"]
     location = state["location"]
 
-    time_risk = 0.0
+    time_risk = 0.01
     if login_time < 6 or login_time > 22:
         time_risk = 0.4
     elif login_time < 9 or login_time > 17:
         time_risk = 0.2
 
-    location_risk = 0.0
+    location_risk = 0.01
     if location not in ["office", "home", "vpn"]:
         location_risk = 0.3
 

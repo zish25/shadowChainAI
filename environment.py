@@ -25,7 +25,7 @@ class SecurityEnv:
                 "file_access": 3,       # number of files accessed
                 "failed_logins": 0,     # number of failed login attempts
             },
-            "risk_score": 0.0,
+            "risk_score": 0.01,
         }
         return self.state
 
@@ -46,7 +46,7 @@ class SecurityEnv:
             return self.state, 0.05, False
 
         # --- Risk Score Calculation ---
-        risk_score = 0.0
+        risk_score = 0.01
 
         # Time-based risk: outside business hours (9-17) is riskier
         login_time = self.state["login_time"]
@@ -72,8 +72,7 @@ class SecurityEnv:
         if file_access > 10:
             risk_score += 0.2        # excessive file access = risky
 
-        # Clamp risk_score to [0.0, 1.0]
-        risk_score = min(risk_score, 1.0)
+        risk_score = min(max(risk_score, 0.01), 0.99)
 
         self.state["risk_score"] = round(risk_score, 2)
 

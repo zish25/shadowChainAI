@@ -16,4 +16,5 @@ model = LogisticRegression()
 model.fit(X, y)
 
 def predict_risk(features):
-    return model.predict_proba([features])[0][1]
+    prob = model.predict_proba([features])[0][1]
+    return min(max(prob, 0.01), 0.99)

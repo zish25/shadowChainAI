@@ -6,13 +6,13 @@ def extract_behavior_features(state):
     file_access = state["activity"]["file_access"]
     failed_logins = state["activity"]["failed_logins"]
 
-    failed_login_risk = 0.0
+    failed_login_risk = 0.01
     if failed_logins >= 3:
         failed_login_risk = 0.3
     elif failed_logins >= 1:
         failed_login_risk = 0.1
 
-    file_access_risk = 0.0
+    file_access_risk = 0.01
     if file_access > 10:
         file_access_risk = 0.2
 
