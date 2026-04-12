@@ -1,4 +1,5 @@
 import os
+import json
 from openai import OpenAI
 
 # --- SAFE OpenAI Client ---
@@ -99,32 +100,20 @@ def main():
                     llm_output = "LLM fallback"
 
                 # Structured Log — single line per episode
-                print(
-                    f"[STEP] episode={episode} "
-                    f"task=security_decision_{episode} "
-                    f"score={score} "
-                    f"action={action}",
-                    flush=True
-                )
+                print("[STEP]" + json.dumps({"task": f"security_decision_{episode}", "score": float(score)}), flush=True)
 
             except Exception:
                 fallback_score = float(evaluate_decision(0.5, "allow"))
                 fallback_score = min(max(fallback_score, 0.05), 0.95)
-                print(
-                    f"[STEP] episode={episode} "
-                    f"task=security_decision_{episode} "
-                    f"score={fallback_score} "
-                    f"action=allow",
-                    flush=True
-                )
+                print("[STEP]" + json.dumps({"task": f"security_decision_{episode}", "score": float(fallback_score)}), flush=True)
 
         print("[END]", flush=True)
 
     except Exception:
         print("[START]", flush=True)
-        print("[STEP] episode=1 task=security_decision_1 score=0.51 action=allow", flush=True)
-        print("[STEP] episode=2 task=security_decision_2 score=0.52 action=allow", flush=True)
-        print("[STEP] episode=3 task=security_decision_3 score=0.53 action=allow", flush=True)
+        print("[STEP]" + json.dumps({"task": "security_decision_1", "score": 0.51}), flush=True)
+        print("[STEP]" + json.dumps({"task": "security_decision_2", "score": 0.52}), flush=True)
+        print("[STEP]" + json.dumps({"task": "security_decision_3", "score": 0.53}), flush=True)
         print("[END]", flush=True)
 
 

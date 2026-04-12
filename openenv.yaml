@@ -1,4 +1,22 @@
-version: "1"
+version: 1
 
-entrypoint:
-  file: inference.py
+tasks:
+  - name: security_decision_1
+    grader:
+      type: float
+
+  - name: security_decision_2
+    grader:
+      type: float
+
+  - name: security_decision_3
+    grader:
+      type: float
+
+  - name: security_decision_4
+    grader:
+      type: float
+
+  - name: security_decision_5
+    grader:
+      type: float
